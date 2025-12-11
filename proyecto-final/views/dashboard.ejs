@@ -1,0 +1,187 @@
+<!-- ICONO PESTAÑA -->
+<link rel="shortcut icon" href="/icons/dashboard.svg" type="image/x-icon">
+
+<!-- CSS -->
+<link rel="stylesheet" href="/css/dashboard.css">
+
+<!-- BODY -->
+<div class="contenedor">
+    <div class="header">
+        <h1>Dashboard de paises</h1>
+        <%
+            let totalPoblacion = 0;
+            let totalArea = 0;
+            let totalGini = 0;
+            let cantidadGini = 0;
+            
+            paises.forEach(pais => {
+                // Total de población
+                totalPoblacion += pais.habitantes;
+                // Total de área
+                totalArea += pais.area;
+                // Promedio de GINI (solo si tiene valor)
+                if (pais.gini !== null && pais.gini !== undefined) {
+                    totalGini += pais.gini;
+                    cantidadGini++;
+                }
+            });
+            const promedioGini = cantidadGini > 0 ? (totalGini / cantidadGini).toFixed(2) : "N/A";
+        %>
+        <div class="estadisticas-generales">
+            <div class="stat-general">
+                <div class="stat-numero"><%= totalPoblacion.toLocaleString() %></div>
+                <div class="stat-label">Total de habitantes</div>
+            </div>
+            <div class="stat-general">
+                <div class="stat-numero"><%= totalArea.toLocaleString() %> km²</div>
+                <div class="stat-label">Total de area</div>
+            </div>
+            <div class="stat-general">
+                <div class="stat-numero"><%= promedioGini %></div>
+                <div class="stat-label">Promedio gini</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="lista-paises">
+        <% if(paises.length === 0){ %>
+            <div class="no-paises">
+                <p>No hay paises cargados</p>
+            </div>
+        <% } else { %>
+            <div class="paises-grid">
+                <% paises.forEach(pais => { %>
+                    <div class="pais-carta">
+                        <h2 class="pais-nombre"><%= pais.pais %></h2>
+                        <div class="pais-info">
+                            <strong>Nombre Oficial:</strong> <%= pais.nombreOficial %>
+                        </div>
+                        
+                        <div class="pais-arrays">
+                            <h4>Capital:</h4>
+                            <div class="tags">
+                                <% pais.capital.forEach(cap => { %>
+                                    <span class="span-array"><%= cap %></span>
+                                <% }); %>
+                            </div>
+                        </div>
+
+                        <div class="pais-info">
+                            <strong>Habitantes:</strong> <%= pais.habitantes.toLocaleString() %>
+                        </div>
+                        
+                        <div class="pais-info">
+                            <strong>Gini:</strong> <%= pais.gini? pais.gini : 'Sin gini cargado' %>
+                        </div>
+
+                        <div class="pais-info">
+                            <strong>Region:</strong> <%= pais.region? pais.region : 'Sin region cargada' %>
+                        </div>
+
+                        <div class="pais-info">
+                            <strong>SubRegion:</strong> <%= pais.subRegion? pais.subRegion : 'Sin Subregion cargada' %>
+                        </div>
+                        
+                        <div class="pais-arrays">
+                            <h4>Lenguajes:</h4>
+                            <div class="tags">
+                                <% pais.lenguajes.forEach(leng => { %>
+                                    <span class="span-array"><%= leng %></span>
+                                <% }); %>
+                            </div>
+                        </div>
+                        
+                        <div class="pais-arrays">
+                            <h4>Latitud y longitud:</h4>
+                            <div class="tags">
+                                <% pais.latitudLongitud.forEach(latlng => { %>
+                                    <span class="span-array"><%= latlng %></span>
+                                <% }); %>
+                            </div>
+                        </div>
+
+                        <div class="pais-info">
+                            <strong>Area:</strong> <%= pais.area.toLocaleString() %> km²
+                        </div>
+                        
+                        <div class="pais-arrays">
+                            <h4>Zonas horarias:</h4>
+                            <div class="tags">
+                                <% if(pais.zonasHorarias && pais.zonasHorarias.length > 0) { %>
+                                    <% pais.zonasHorarias.forEach(zona=> { %>
+                                        <span class="span-array"><%= zona%></span>
+                                    <% }); %>
+                                <% } else { %>
+                                    <span class="span-array-sin-datos">Sin zonas horarias cargadas</span>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <div class="pais-arrays">
+                            <h4>Paises vecinos:</h4>
+                            <div class="tags">
+                                <% if(pais.paisesVecinos && pais.paisesVecinos.length > 0) { %>
+                                    <% pais.paisesVecinos.forEach(vecino => { %>
+                                        <span class="span-array"><%= vecino %></span>
+                                    <% }); %>
+                                <% } else { %>
+                                    <span class="span-array-sin-datos">Sin paises vecinos cargados</span>
+                                <% } %>
+                            </div>
+                        </div>
+                        
+                        <div class="pais-info">
+                            <strong>Creador:</strong> <%= pais.creador ? pais.creador : 'Sin creador cargado' %>
+                        </div>
+                        
+                        <div class="paises-accion">
+                            <a href="pais/editar/<%= pais._id %>" class="pais-accion" id="boton-editar">Editar</a>
+                            <button class="pais-accion" id="boton-eliminar" onclick="confirmarEliminacion('<%= pais._id %>', '<%= pais.pais %>')">Eliminar</button>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+
+            <!-- Paginación -->
+            <div class="paginacion-contenedor">
+                <div class="paginacion-info">
+                    Mostrando <span id="paginacion-inicio">1</span> - <span id="paginacion-fin">4</span> de <span id="paginacion-total"><%= paises.length %></span> paises
+                </div>
+                
+                <div class="paginacion-controles">
+                    <button class="boton-paginacion" id="btn-primera" onclick="irAPagina(1)">
+                        <span>❮❮</span>
+                    </button>
+                    <button class="boton-paginacion" id="btn-anterior" onclick="cambiarPagina(-1)">
+                        <span>❮</span> Anterior
+                    </button>
+                    
+                    <div class="paginacion-numeros" id="paginacionNumeros"></div>
+                    
+                    <button class="boton-paginacion" id="btn-siguiente" onclick="cambiarPagina(1)">
+                        Siguiente <span>❯</span>
+                    </button>
+                    <button class="boton-paginacion" id="btn-ultima" onclick="irAUltimaPagina()">
+                        <span>❯❯</span>
+                    </button>
+                </div>
+                
+                <div class="paginacion-selector">
+                    <label for="items-por-pagina">Mostrar:</label>
+                    <select id="items-por-pagina" onchange="cambiarItemsPorPagina()">
+                        <option value="4" selected>4 por página</option>
+                        <option value="8">8 por página</option>
+                        <option value="12">12 por página</option>
+                        <option value="16">16 por página</option>
+                        <option value="<%= paises.length %>">Todos</option>
+                    </select>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<!-- JS -->
+<script> window.paises = <%- JSON.stringify(paises) %>; </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/dashboard.js"></script>

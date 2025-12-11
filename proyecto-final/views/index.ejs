@@ -1,0 +1,115 @@
+<!-- ICONO PESTAÑA -->
+<link rel="shortcut icon" href="/icons/home.svg" type="image/x-icon">
+
+<!-- CSS -->
+<link rel="stylesheet" href="/css/index.css">
+
+<!-- BODY -->
+<div class="contenedor">
+    <div class="hero-section">
+        <h1>Bienvenido al registro de Paises</h1>
+        <p class="hero-subtitle">Estadisticas generales de todo tipo de paises</p>
+        <button class="boton-cargar-api" id="boton-cargar-api">Cargar API</button>
+    </div>
+    <div class="stats-destacadas">
+
+        <% if (!paises || paises.length === 0) { %>
+            <p class="no-paises">No hay paises cargados para mostrar estadísticas.</p>
+        <% }else { %>
+
+            <!-- Pais con mas habitantes -->
+        <% 
+        const paisPoblado = paises.reduce((prev, current) => 
+            (prev.habitantes > current.habitantes) ? prev : current
+        );
+        %>
+        <div class="stat-card">
+            <div class="stat-icon"><img src="/icons/habitantes.svg" alt="Pais con mas habitantes icono" class="stat-icon-img"></div>
+            <h2>Pais con mas habitantes</h2>
+            <div class="stat-nombre"><%= paisPoblado.pais %></div>
+            <div class="stat-detalle">
+                <strong>Habitantes:</strong> <%= paisPoblado.habitantes.toLocaleString() %>
+            </div>
+            <div class="stat-detalle">
+                <strong>Nombre Real:</strong> <%= paisPoblado.nombreOficial %>
+            </div>
+            <a href="/api/dashboard" class="boton-ver-mas">Ver Dashboard</a>
+        </div>
+        <!-- Pais con mas vecinos -->
+        <% 
+        const paisVecinos = paises.reduce((prev, current) => 
+            (prev.paisesVecinos.length > current.paisesVecinos.length) ? prev : current
+        );
+        %>
+        <div class="stat-card">
+            <div class="stat-icon"><img src="/icons/aliado.svg" alt="Pais con mas vecinos icono" class="stat-icon-img"></div>
+            <h2>Pais con más vecinos</h2>
+            <div class="stat-nombre"><%= paisVecinos.pais %></div>
+            <div class="stat-detalle">
+                <strong>Vecinos:</strong> <%= paisVecinos.paisesVecinos.length %>
+            </div>
+            <div class="atributos-lista">
+                <% paisVecinos.paisesVecinos.forEach(vecino => { %>
+                    <span class="atributo-badge"><%= vecino %></span>
+                <% }); %>
+            </div>
+            <a href="/api/dashboard" class="boton-ver-mas">Ver Dashboard</a>
+        </div>
+        <!-- Pais con mas lenguajes -->
+        <% 
+        const paisLenguajes = paises.reduce((prev, current) => {
+            const prevLenguajes = prev.lenguajes ? prev.lenguajes.length : 0;
+            const currentLenguajes = current.lenguajes ? current.lenguajes.length : 0;
+            return (prevLenguajes > currentLenguajes) ? prev : current;
+        });
+        %>
+        <div class="stat-card">
+            <div class="stat-icon"><img src="/icons/lenguaje.svg" alt="Pais con mas lenguajes icono" class="stat-icon-img"></div>
+            <h2>Pais con más lenguajes</h2>
+            <div class="stat-nombre"><%= paisLenguajes.pais %></div>
+            <div class="stat-detalle">
+                <strong>Lenguajes:</strong> <%= paisLenguajes.lenguajes ? paisLenguajes.lenguajes.length : 0 %>
+            </div>
+            <% if(paisLenguajes.lenguajes && paisLenguajes.lenguajes.length > 0) { %>
+                <div class="atributos-lista">
+                    <% paisLenguajes.lenguajes.forEach(lenguaje => { %>
+                        <span class="atributo-badge"><%= lenguaje %></span>
+                    <% }); %>
+                </div>
+            <% } %>
+            <a href="/api/dashboard" class="boton-ver-mas">Ver Dashboard</a>
+        </div>
+
+        <!-- Pais con mas area -->
+        <% 
+        const paisArea= paises.reduce((prev, current) => 
+            (prev.area > current.area) ? prev : current
+        );
+        %>
+        <div class="stat-card">
+            <div class="stat-icon"><img src="/icons/area.svg" alt="Pais con mas area icono" class="stat-icon-img"></div>
+            <h2>Pais con mas area</h2>
+            <div class="stat-nombre"><%= paisArea.pais %></div>
+            <div class="stat-detalle">
+                <strong>Area:</strong> <%= paisArea.area.toLocaleString() %> Km²
+            </div>
+            <div class="stat-detalle">
+                <strong>Nombre Real:</strong> <%= paisArea.nombreOficial %>
+            </div>
+            <a href="/api/dashboard" class="boton-ver-mas">Ver Dashboard</a>
+        </div>
+
+        <% } %>
+        
+    </div>
+    <div class="estadisticas-generales">
+        <div class="stat-general">
+            <div class="stat-numero"><%= paises.length %></div>
+            <div class="stat-label">Total de paises</div>
+        </div>
+    </div>
+</div>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/index.js"></script>

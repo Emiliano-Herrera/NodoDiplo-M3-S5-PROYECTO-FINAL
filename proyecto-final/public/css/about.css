@@ -1,0 +1,80 @@
+/* about.css - Versión Minimalista con Azul Oscuro */
+:root {
+    --primary-color: #1e40af;
+    --primary-dark: #1e3a8a;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --border-color: #e5e7eb;
+    --bg-white: #ffffff;
+    --bg-gray: #f8fafc;
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.about-section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    background: var(--bg-white);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.about-section h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.about-section h1::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+.about-section p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--text-light);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .about-section {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+    }
+    
+    .about-section h1 {
+        font-size: 2rem;
+    }
+    
+    .about-section p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-section {
+        padding: 1.5rem 1rem;
+    }
+    
+    .about-section h1 {
+        font-size: 1.75rem;
+    }
+    
+    .about-section p {
+        font-size: 0.95rem;
+    }
+}

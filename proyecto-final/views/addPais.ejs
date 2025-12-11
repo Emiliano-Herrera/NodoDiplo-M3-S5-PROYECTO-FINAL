@@ -1,0 +1,112 @@
+<link rel="stylesheet" href="/css/addSuperhero.css">
+<!-- BPDY -->
+
+<body>
+    <div class="contenedor">
+        <div class="header">
+            <h1>Agregar Pais</h1>
+            <p>Completa el formulario para agregar un nuevo Pais</p>
+        </div>
+        <div class="contenedor-formulario">
+            <form id="paisForm">
+                <div class="form-grupo">
+                    <label for="nombrePais">Nombre del pais</label>
+                    <input type="text" name="nombrePais" id="nombrePais">
+                    <p class="texto-ayuda">Minimo 3 caracteres, Maximo 90</p>
+                    <p class="error-mensaje" id="error-nombrePais"></p>
+                </div>
+                <div class="form-grupo">
+                    <label for="nombreOficial">Nombre oficial</label>
+                    <input type="text" name="nombreOficial" id="nombreOficial">
+                    <p class="texto-ayuda">Minimo 3 caracteres, Maximo 90</p>
+                    <p class="error-mensaje" id="error-nombreOficial"></p>
+                </div>
+                <div class="form-grupo">
+                    <label for="capital">Capital</label>
+                    <div id="capitalContenedor" class="array-capital"></div>
+                    <button type="button" class="boton-añadir-item" onclick="añadirItem('capital')">Agregar
+                        Capital</button>
+                    <p class="texto-ayuda">Minimo una capital</p>
+                    <p class="error-mensaje" id="error-capital"></p>
+                </div>
+                <div class="form-grupo">
+                    <label for="habitantes">Habitantes</label>
+                    <input type="number" name="habitantes" id="habitantes">
+                    <p class="texto-ayuda">Debe ser un numero mayor a 0</p>
+                    <p class="error-mensaje" id="error-habitantes"></p>
+                </div>
+                <div class="form-grupo">
+                    <label for="gini">Gini</label>
+                    <input type="number" name="gini" id="gini" step="any">
+                    <p class="texto-ayuda">Debe ser un numero mayor a 0 y menor a 100</p>
+                    <p class="error-mensaje" id="error-gini"></p>
+                </div>
+                <div class="form-grupo">
+                    <label for="region">Region</label>
+                    <input type="text" name="region" id="region">
+                    <p class="texto-ayuda">Opcional</p>
+                    <p class="error-mensaje" id="error-region"></p>
+                </div>
+                <div class="form-grupo">
+                    <label for="subregion">SubRegion</label>
+                    <input type="text" name="subregion" id="subregion">
+                    <p class="texto-ayuda">Opcional</p>
+                    <p class="error-mensaje" id="error-subregion"></p>
+                </div>
+                <div class="form-grupo">
+                    <label for="lenguajes">Lenguajes</label>
+                    <div id="lenguajesContenedor" class="array-lenguajes"></div>
+                    <button type="button" class="boton-añadir-item" onclick="añadirItem('lenguajes')">Agregar
+                        lenguaje</button>
+                    <p class="texto-ayuda">Minimo un lenguajes</p>
+                    <p class="error-mensaje" id="error-lenguajes"></p>
+                </div>
+                <div class="form-grupo">
+                    <label for="latlng">Latitud y longitud</label>
+                    <input type="number" name="latitud" id="latitud" step="any">
+                    <input type="number" name="longitud" id="longitud" step="any">
+                    <p class="texto-ayuda">Deben ser numeros</p>
+                    <p class="error-mensaje" id="error-latlng"></p>
+                </div>
+                <div class="form-grupo">
+                    <label for="area">Area</label>
+                    <input type="number" name="area" id="area">
+                    <p class="texto-ayuda">Debe ser un numero mayor a 0</p>
+                    <p class="error-mensaje" id="error-area"></p>
+                </div>
+                <div class="form-grupo">
+                    <label for="zonasHorarias">Zonas horarias</label>
+                    <div id="zonasHorariasContenedor" class="array-zonasHorarias"></div>
+                    <button type="button" class="boton-añadir-item" onclick="añadirItem('zonasHorarias')">Agregar zona
+                        horaria</button>
+                    <p class="texto-ayuda">Minimo una zona horaria</p>
+                    <p class="error-mensaje" id="error-zonasHorarias"></p>
+                </div>
+                <div class="form-grupo">
+                    <label for="paisesVecinos">Paises vecinos</label>
+                    <div id="paisesVecinosContenedor" class="array-paisesVecinos"></div>
+                    <button type="button" class="boton-añadir-item" onclick="añadirItem('paisesVecinos')">Agregar un
+                        pais vecino</button>
+                    <p class="texto-ayuda">En mayusculas y de 3 caracteres</p>
+                    <p class="error-mensaje" id="error-paisesVecinos"></p>
+                </div>
+                <div class="form-grupo">
+                    <label for="creador">Creador</label>
+                    <input type="text" name="creador" id="creador">
+                    <p class="texto-ayuda">Opcional</p>
+                    <p class="error-mensaje" id="error-creador"></p>
+                </div>
+
+                <div class="accionForm">
+                    <a href="/api/dashboard" class="boton-cancelar">Cancelar</a>
+                    <button type="submit" class="boton-agregar">Crear Pais</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/addPais.js"></script>
+</body>
+
+</html>
